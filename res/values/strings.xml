@@ -2,7 +2,12 @@
 <resources>
 
     <string name="app_name">Droidcon IT 2014 Symmetric Demo</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_discard">Clear</string>
+    <string name="action_bar_title">Symmetric Demo</string>
+    <string name="action_bar_subtitle">Step 1</string>
+    
     <string name="hello_world">Hello world!</string>
+    <string name="show_providers">Show Providers</string>
+    <string name="show_sc_services">Show SC Services</string>
 
 </resources>

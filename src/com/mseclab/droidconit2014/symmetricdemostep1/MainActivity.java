@@ -2,17 +2,22 @@ package com.mseclab.droidconit2014.symmetricdemostep1;
 
 import java.security.Provider;
 import java.security.Security;
-import java.util.Set;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.text.method.ScrollingMovementMethod;
 import android.util.Log;
 import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
+
+
 
 public class MainActivity extends Activity {
 
 	private TextView outView;
+
 	private final static String TAG = "DROIDCONIT";
 
 	@Override
@@ -20,7 +25,10 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		outView = (TextView) findViewById(R.id.out_view);
-		showProviders();
+		
+		// Set Action Bar Title
+		getActionBar().setTitle(R.string.action_bar_title);
+		getActionBar().setSubtitle(R.string.action_bar_subtitle);
 	}
 
 	@Override
@@ -30,20 +38,51 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	private void showProviders() {
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		// Handle presses on the action bar items
+		switch (item.getItemId()) {
+		case R.id.action_discard:
+			outView.setText("");
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+		}
+	}
+	
+	
+	
+	public void onShowProvidersClick(View view) {
 		Provider[] providers = Security.getProviders();
 		for (Provider provider : providers) {
 			debug("Provider: " + provider.getName());
 			debug("Version : " + Double.toString(provider.getVersion()));
 			debug("Info    : " + provider.getInfo());
-			Set<Provider.Service> services = provider.getServices();
-			for (Provider.Service service : services) {
-				debug("  algorithm: " + service.getAlgorithm());
-				debug(service.toString());
-				
-			}
+
+			/*
+			 * // Lista solo per spongy castle Set<Provider.Service> services =
+			 * provider.getServices(); for (Provider.Service service : services)
+			 * { debug("  algorithm: " + service.getAlgorithm());
+			 * //debug(service.toString());
+			 * 
+			 * }
+			 */
+			debug("N. Services : " + Integer.toString(provider.getServices().size()));
 			debug("\n");
 		}
+	}
+
+	public void onShowSCServicesClick(View view) {
+		Provider spongyCastle = Security.getProvider("SC");
+		if (spongyCastle == null) {
+			debug("Spongy Castle Provider not available!");
+			return;
+		}
+		
+		debug("Spongy Castle Services:");
+		for (Provider.Service service : spongyCastle.getServices())
+			debug("- " + service.getAlgorithm());
+
 	}
 
 	private void debug(String message) {
