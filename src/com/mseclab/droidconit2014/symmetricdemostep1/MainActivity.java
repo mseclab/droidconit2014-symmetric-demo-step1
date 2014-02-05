@@ -12,8 +12,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
-
-
 public class MainActivity extends Activity {
 
 	private TextView outView;
@@ -25,7 +23,7 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		outView = (TextView) findViewById(R.id.out_view);
-		
+
 		// Set Action Bar Title
 		getActionBar().setTitle(R.string.action_bar_title);
 		getActionBar().setSubtitle(R.string.action_bar_subtitle);
@@ -49,26 +47,15 @@ public class MainActivity extends Activity {
 			return super.onOptionsItemSelected(item);
 		}
 	}
-	
-	
-	
+
 	public void onShowProvidersClick(View view) {
 		Provider[] providers = Security.getProviders();
 		for (Provider provider : providers) {
 			debug("Provider: " + provider.getName());
 			debug("Version : " + Double.toString(provider.getVersion()));
 			debug("Info    : " + provider.getInfo());
-
-			/*
-			 * // Lista solo per spongy castle Set<Provider.Service> services =
-			 * provider.getServices(); for (Provider.Service service : services)
-			 * { debug("  algorithm: " + service.getAlgorithm());
-			 * //debug(service.toString());
-			 * 
-			 * }
-			 */
 			debug("N. Services : " + Integer.toString(provider.getServices().size()));
-			debug("\n");
+			debug("");
 		}
 	}
 
@@ -78,7 +65,7 @@ public class MainActivity extends Activity {
 			debug("Spongy Castle Provider not available!");
 			return;
 		}
-		
+
 		debug("Spongy Castle Services:");
 		for (Provider.Service service : spongyCastle.getServices())
 			debug("- " + service.getAlgorithm());
